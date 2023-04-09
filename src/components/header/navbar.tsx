@@ -1,11 +1,12 @@
 import {Link} from 'react-router-dom'
+import {AppRoutes} from '../../routes/route-constants'
 
 function Navbar() {
    const navItems = [
-      {title: 'Home', path: '/'},
-      {title: 'Category', path: '/category'},
-      {title: 'Contact', path: '/category/1'},
-      {title: 'Cart', path: '/contact'},
+      {title: 'Home', path: AppRoutes.home},
+      {title: 'Category', path: AppRoutes.categories.list},
+      {title: 'Contact', path: AppRoutes.contact},
+      {title: 'Cart', path: AppRoutes.cart},
    ]
    return (
       <ul className="flex items-center">

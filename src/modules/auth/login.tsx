@@ -6,6 +6,9 @@ import {AppButton} from '../../components/app-button'
 import {rules} from './constants'
 import apiAuth from '../../services/api.auth'
 import './styles.less'
+import {useMutation} from '@tanstack/react-query'
+import {ILoginParam} from '../../types'
+import {AppRoutes} from '../../routes/route-constants'
 
 export const LoginWrapper = () => {
    const [email, setEmail] = useState<string>()
@@ -21,24 +24,32 @@ export const LoginWrapper = () => {
       setPassword(e.currentTarget.value)
    }
 
+   const {
+      mutate: loginMutate,
+      isError,
+      isLoading,
+      error,
+   } = useMutation({
+      mutationFn: (body: ILoginParam) => {
+         return apiAuth.login(body)
+      },
+      onSuccess: (data) => {
+         localStorage.setItem('accessToken', data.access_token)
+         navigate('/')
+      },
+   })
+
    const onSubmit = async () => {
       const email: string = form.getFieldValue('email')
       const password: string = form.getFieldValue('password')
-      try {
-         const response = await apiAuth.login({email, password})
-         localStorage.setItem('access_token', response.access_token)
-
-         navigate('/')
-      } catch (error) {
-         console.log(error)
-      }
+      loginMutate({email, password})
    }
    return (
       <div className="flex flex-col">
          <p className="text-[28px] font-normal text-[#00000] mb-[12px]">
             Enter your email and password to login or{' '}
             <Link
-               to={'/register'}
+               to={AppRoutes.signup}
                className="border-b-2 border-solid border-black pb-[1px] cursor-pointer hover:opacity-50">
                sign up
             </Link>

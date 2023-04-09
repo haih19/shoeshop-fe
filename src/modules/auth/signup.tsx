@@ -1,10 +1,11 @@
-import {Button, Form, Input} from 'antd'
+import {Form} from 'antd'
 import {Link} from 'react-router-dom'
 import {FloatInput} from '../../components/float-input'
 import {useState} from 'react'
 import './styles.less'
 import {AppButton} from '../../components/app-button'
 import {rules} from './constants'
+import {AppRoutes} from '../../routes/route-constants'
 
 export const SignupWrapper = () => {
    const [email, setEmail] = useState<string>()
@@ -22,7 +23,7 @@ export const SignupWrapper = () => {
          <p className="text-[28px] font-normal text-[#00000] mb-[12px]">
             Please enter the following details to sign up or{' '}
             <Link
-               to={'/login'}
+               to={AppRoutes.login}
                className="border-b-2 border-solid border-black pb-[1px] cursor-pointer hover:opacity-50">
                log in
             </Link>
