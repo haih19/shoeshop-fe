@@ -1,5 +1,5 @@
-import {SignupWrapper} from '../../modules/auth/signup'
+import {SignUpWrapper} from '../../modules/auth/signup'
 
 export const RegisterPage = () => {
-   return <SignupWrapper />
+   return <SignUpWrapper />
 }

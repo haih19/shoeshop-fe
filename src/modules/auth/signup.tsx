@@ -7,9 +7,12 @@ import {AppButton} from '../../components/app-button'
 import {rules} from './constants'
 import {AppRoutes} from '../../routes/route-constants'
 
-export const SignupWrapper = () => {
+export const SignUpWrapper = () => {
+   const [name, setName] = useState<string>()
+   const [userName, setUserName] = useState<string>()
    const [email, setEmail] = useState<string>()
    const [password, setPassword] = useState<string>()
+   const [confirmPassword, setConfirmPassword] = useState<string>()
 
    const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
       setEmail(e.currentTarget.value)
@@ -23,7 +26,7 @@ export const SignupWrapper = () => {
          <p className="text-[28px] font-normal text-[#00000] mb-[12px]">
             Please enter the following details to sign up or{' '}
             <Link
-               to={AppRoutes.login}
+               to={AppRoutes.logIn}
                className="border-b-2 border-solid border-black pb-[1px] cursor-pointer hover:opacity-50">
                log in
             </Link>
@@ -33,7 +36,6 @@ export const SignupWrapper = () => {
          </div>
          <Form
             size="large"
-            name="user_login"
             className="login-form mt-7 "
             layout="vertical">
             <div className="flex gap-[10px]">
@@ -42,8 +44,10 @@ export const SignupWrapper = () => {
                      name="name"
                      label="Name"
                      placeholder="Enter your name"
-                     value={email}
-                     onChange={onChangeEmail}
+                     value={name}
+                     onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                        setName(e.currentTarget.value)
+                     }
                      rules={rules.username}
                   />
                </div>
@@ -52,8 +56,10 @@ export const SignupWrapper = () => {
                      name="username"
                      label="Username"
                      placeholder="Enter your username"
-                     value={email}
-                     onChange={onChangeEmail}
+                     value={userName}
+                     onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                        setUserName(e.currentTarget.value)
+                     }
                      rules={rules.username}
                   />
                </div>
@@ -80,9 +86,11 @@ export const SignupWrapper = () => {
                   name="confirm"
                   label="Confirm"
                   placeholder="Confirm password"
-                  value={password}
-                  onChange={onChangePassword}
+                  value={confirmPassword}
                   type="password"
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                     setConfirmPassword(e.currentTarget.value)
+                  }
                   isPassword={true}
                />
             </div>

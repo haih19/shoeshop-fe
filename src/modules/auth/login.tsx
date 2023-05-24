@@ -1,7 +1,7 @@
-import {Form} from 'antd'
+import {Form, notification} from 'antd'
 import {Link, useNavigate} from 'react-router-dom'
 import {FloatInput} from '../../components/float-input'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {AppButton} from '../../components/app-button'
 import {rules} from './constants'
 import apiAuth from '../../services/api.auth'
@@ -9,6 +9,7 @@ import './styles.less'
 import {useMutation} from '@tanstack/react-query'
 import {ILoginParam} from '../../types'
 import {AppRoutes} from '../../routes/route-constants'
+import {STORAGE} from '../../helper/storage'
 
 export const LoginWrapper = () => {
    const [email, setEmail] = useState<string>()
@@ -35,6 +36,8 @@ export const LoginWrapper = () => {
       },
       onSuccess: (data) => {
          localStorage.setItem('accessToken', data.access_token)
+         STORAGE.setCookiesId(data.access_token)
+         STORAGE.setSessionId(data.access_token)
          navigate('/')
       },
    })
@@ -44,12 +47,24 @@ export const LoginWrapper = () => {
       const password: string = form.getFieldValue('password')
       loginMutate({email, password})
    }
+   const openNotification = () => {
+      notification.open({
+         message: 'Error',
+         description: 'Incorrect email or password!',
+      })
+   }
+
+   useEffect(() => {
+      if (isError && error) {
+         openNotification()
+      }
+   }, [isError, isLoading])
    return (
       <div className="flex flex-col">
          <p className="text-[28px] font-normal text-[#00000] mb-[12px]">
             Enter your email and password to login or{' '}
             <Link
-               to={AppRoutes.signup}
+               to={AppRoutes.signUp}
                className="border-b-2 border-solid border-black pb-[1px] cursor-pointer hover:opacity-50">
                sign up
             </Link>

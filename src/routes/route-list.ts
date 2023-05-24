@@ -20,13 +20,13 @@ export const routeList = [
       isPrivate: true,
    },
    {
-      path: AppRoutes.login,
+      path: AppRoutes.logIn,
       component: LoginPage,
       layout: AuthLayout,
       isPrivate: false,
    },
    {
-      path: AppRoutes.signup,
+      path: AppRoutes.signUp,
       component: RegisterPage,
       layout: AuthLayout,
       isPrivate: false,

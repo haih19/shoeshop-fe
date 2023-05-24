@@ -1,16 +1,17 @@
 import axios from 'axios'
+import {STORAGE} from '../helper/storage'
 
 const baseUrl = import.meta.env.VITE_API_URL
-const access_token = localStorage.getItem('accessToken')
 
 const request = axios.create({
    baseURL: baseUrl,
-   headers: {
-      Authorization: `Bearer ${access_token}`,
-   },
 })
 
-request.interceptors.request.use(async (config) => config)
+request.interceptors.request.use(async (config: any) => {
+   const token = STORAGE.getCookiesId() || STORAGE.getSessionId()
+   config.headers.Authorization = `Bearer ${token}`
+   return config
+})
 
 request.interceptors.response.use(
    (response) => {

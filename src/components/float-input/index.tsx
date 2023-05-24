@@ -11,7 +11,7 @@ interface Props {
    placeholder?: string
    type?: string
    name: string
-   rules?: Rule[] | undefined
+   rules?: Rule[]
    isPassword?: boolean
 }
 
@@ -37,7 +37,7 @@ export const FloatInput = memo((props: Props) => {
             <Form.Item
                name={name}
                rules={rules}>
-               {isPassword && isPassword ? (
+               {isPassword ? (
                   <Input.Password
                      onChange={props.onChange}
                      type={type}
